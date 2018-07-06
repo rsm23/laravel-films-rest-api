@@ -1,5 +1,6 @@
 <?php
 
+use App\Film;
 use Faker\Generator as Faker;
 
 /*
@@ -19,5 +20,31 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Genre::class, function (Faker $faker) {
+    return [
+            'name' => $faker->word,
+    ];
+});
+$factory->define(App\Film::class, function (Faker $faker) {
+    $title = $faker->sentence($nbWords = 3, $variableNbWords = true);
+    return [
+            'name' => $title,
+            'slug' => str_slug($title),
+            'description' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+            'release_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+            'country' => 'USA',
+            'price' => 37.45,
+            'photo' => 'https://picsum.photos/100/100'
+    ];
+});
+$factory->define(App\Rating::class, function (Faker $faker) {
+    $film = Film::where('id',$faker->numberBetween(1,20))->get()[0]->toArray()['slug'];
+    return [
+            'user_id' => $faker->numberBetween(1,10),
+            'film_slug' => $film,
+            'rating' => $faker->numberBetween(1,5)
     ];
 });

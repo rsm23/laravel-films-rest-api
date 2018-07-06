@@ -17,6 +17,7 @@ class CreateFilmsTable extends Migration
     
             $table->increments('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->date('release_date');
             $table->string('country');
@@ -29,11 +30,11 @@ class CreateFilmsTable extends Migration
         Schema::create('film_genre', function (Blueprint $table) {
         
             $table->increments('id');
-            $table->unsignedInteger('film_id');
+            $table->string('film_slug');
             $table->unsignedInteger('genre_id');
     
             $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
-            $table->foreign('film_id')->references('id')->on('films')->onDelete('cascade');
+            $table->foreign('film_slug')->references('slug')->on('films')->onDelete('cascade');
             $table->timestamps();
         });
     }

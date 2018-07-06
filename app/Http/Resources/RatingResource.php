@@ -16,7 +16,7 @@ class RatingResource extends JsonResource
     {
         return [
                 'user_id' => $this->user_id,
-                'film_id' => $this->film_id,
+                'film_slug' => $this->film_slug,
                 'rating' => $this->rating,
                 'created_at' => (string) $this->created_at,
                 'updated_at' => (string) $this->updated_at,

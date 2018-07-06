@@ -12,9 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    redirect('/films');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/films', 'FilmsController@index')->name('films');
+Route::get('/films/{film}', 'FilmsController@show')->name('film');

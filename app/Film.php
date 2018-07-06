@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model {
+    protected $primaryKey = 'slug';
+    protected $keyType = 'string';
     
     /**
      * A Film has many ratings.
@@ -21,6 +23,6 @@ class Film extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function genres() {
-        return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
+        return $this->belongsToMany(Genre::class, 'film_genre', 'film_slug', 'genre_id');
     }
 }
