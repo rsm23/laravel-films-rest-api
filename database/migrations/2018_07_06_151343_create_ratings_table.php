@@ -19,6 +19,9 @@ class CreateRatingsTable extends Migration
             $table->unsignedInteger('film_id');
             $table->unsignedInteger('rating');
             $table->timestamps();
+    
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('film_id')->references('id')->on('films');
         });
     }
 
