@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class FilmsController extends Controller {
     
+    /**
+     * Create a new instance of the controller
+     *
+     * FilmsController constructor.
+     */
     public function __construct() {
         $this->middleware('auth:api')->except(['index', 'show']);
     }
@@ -30,19 +35,36 @@ class FilmsController extends Controller {
      * @return \App\Http\Resources\FilmsResource
      */
     public function store(Request $request) {
-        
-        $film = Film::create([
-                'user_id' => $request->user()->id,
-                'name' => $request->name,
-                'description' => $request->description,
-                'release_date' => $request->release_date,
-                'country' => $request->country,
-                'price' => $request->price,
-                'photo' => $request->photo,
-                'genre' => $request->genre,
-        ]);
-        
-        return new FilmsResource($film);
+        if ($request->user()->isAdmin) {
+            $validatedData = $request->validate([
+                    'name' => 'required|max:255',
+                    'description' => 'required',
+                    'release_date' => 'required|date',
+                    'country' => 'required',
+                    'price' => 'required|numeric',
+                    'photo' => 'required|url',
+                    'genre' => 'required|array|min:1',
+            ]);
+            if(Film::whereSlug(str_slug($request->name))->count() === 0){
+                $slug = str_slug($request->name);
+            }else{
+                $slug = str_slug($request->name).rand(1,1000);
+            }
+            $film = Film::create([
+                    'name' => $request->name,
+                    'slug' => $slug,
+                    'description' => $request->description,
+                    'release_date' => $request->release_date,
+                    'country' => $request->country,
+                    'price' => $request->price,
+                    'photo' => $request->photo,
+            ]);
+    
+            $film->genres()->attach($request->genre);
+            
+            return new FilmsResource($film);
+        }
+        return response()->json(['error' => 'You can are not allowed to add films.'], 403);
     }
     
     /**
@@ -54,7 +76,6 @@ class FilmsController extends Controller {
      */
     public function show(Film $film) {
         return new FilmsResource($film);
-        
     }
     
     /**
@@ -66,21 +87,29 @@ class FilmsController extends Controller {
      * @return \App\Http\Resources\FilmsResource
      */
     public function update(Request $request, Film $film) {
-        $film->update($request->all());
-        
-        return new FilmsResource($film);
+        if ($request->user()->isAdmin) {
+            $film->update($request->all());
+            
+            return new FilmsResource($film);
+        }
+        return response()->json(['error' => 'You can are not allowed to add films.'], 403);
     }
     
     /**
      * Remove the specified resource from storage.
      *
+     * @param \Illuminate\Http\Request $request
      * @param \App\Film $film
      *
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Film $film) {
-        $film->delete();
-        return response()->json(NULL, 204);
+    public function destroy(Request $request, Film $film) {
+        if ($request->user()->isAdmin) {
+            $film->delete();
+            return response()->json(NULL, 204);
+        }
+        return response()->json(['error' => 'You can are not allowed to add films.'], 403);
+        
     }
 }

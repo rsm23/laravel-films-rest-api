@@ -5,8 +5,20 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model {
+    
     protected $primaryKey = 'slug';
     protected $keyType = 'string';
+    public $incrementing = false;
+    
+    protected $fillable = [
+            'name',
+            'slug',
+            'description',
+            'release_date',
+            'country',
+            'price',
+            'photo',
+    ];
     
     /**
      * A Film has many ratings.

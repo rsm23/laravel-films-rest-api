@@ -18,4 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/films', 'FilmsController@index')->name('films');
+Route::get('/films/create', 'FilmsController@create')->name('filmCreate');
+Route::post('/films/create', 'FilmsController@store');
 Route::get('/films/{film}', 'FilmsController@show')->name('film');

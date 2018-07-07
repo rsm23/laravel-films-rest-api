@@ -4,8 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
-{
+class Rating extends Model {
+    
+    protected $fillable = [
+            'user_id',
+            'film_id',
+            'rating',
+    ];
     
     /**
      * A rating belongs to a film.
