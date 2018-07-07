@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Film;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\RatingResource;
 use App\Rating;
 use Illuminate\Http\Request;

@@ -19,7 +19,7 @@ class FilmsController extends Controller {
      * @return string
      */
     public function index() {
-        return FilmsResource::collection(Film::with('ratings')->paginate(25));
+        return FilmsResource::collection(Film::with('ratings')->get());
     }
     
     /**

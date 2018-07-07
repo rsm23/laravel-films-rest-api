@@ -23,4 +23,4 @@ Route::post('refresh', 'Api\AuthController@refresh');
 Route::post('me', 'Api\AuthController@me');
 
 Route::apiResource('films', 'Api\FilmsController');
-Route::post('films/{film}/ratings', 'RatingController@store');
+Route::post('films/{film}/ratings', 'Api\RatingController@store');

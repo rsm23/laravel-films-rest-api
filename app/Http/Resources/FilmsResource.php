@@ -25,7 +25,7 @@ class FilmsResource extends JsonResource
                 'created_at' => (string) $this->created_at,
                 'updated_at' => (string) $this->updated_at,
                 'genres' => $this->genres,
-                'ratings' => $this->ratings,
+                'ratings' => RatingResource::collection($this->ratings),
                 'photo' => $this->photo,
         ];
     }
