@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    redirect('/films');
+    return redirect('/films');
 });
 
 Auth::routes();

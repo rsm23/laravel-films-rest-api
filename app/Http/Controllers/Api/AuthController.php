@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller {
+    
+    
+    /**
+     * Use the web guard.
+     *
+     * @return mixed
+     */
+    protected function guard() {
+        return Auth::guard('api');
+    }
     
     /**
      * Register a new user.
@@ -63,8 +74,7 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
-    {
+    public function me() {
         return response()->json(auth()->user());
     }
     
@@ -73,8 +83,7 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
-    {
+    public function logout() {
         auth()->logout();
         
         return response()->json(['message' => 'Successfully logged out']);
@@ -85,8 +94,7 @@ class AuthController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
-    {
+    public function refresh() {
         return $this->respondWithToken(auth()->refresh());
     }
 }
