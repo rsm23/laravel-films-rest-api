@@ -38,6 +38,15 @@ class User extends Authenticatable implements JWTSubject
     }
     
     /**
+     * A user could have many comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+    
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed

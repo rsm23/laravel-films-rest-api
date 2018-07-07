@@ -24,7 +24,7 @@ class FilmsController extends Controller {
      * @return string
      */
     public function index() {
-        return FilmsResource::collection(Film::with('ratings')->get());
+        return FilmsResource::collection(Film::with(['ratings', 'comments.owner'])->get());
     }
     
     /**

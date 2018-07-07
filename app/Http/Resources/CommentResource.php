@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RatingResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,8 @@ class RatingResource extends JsonResource
         return [
                 'user_id' => $this->user_id,
                 'film_slug' => $this->film_slug,
-                'rating' => $this->rating,
-                'average_rating' => $this->film->ratings->avg('rating')
+                'body' => $this->body,
+                'owner' => $this->owner
         ];
     }
 }

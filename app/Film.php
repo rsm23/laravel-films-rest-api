@@ -37,4 +37,13 @@ class Film extends Model {
     public function genres() {
         return $this->belongsToMany(Genre::class, 'film_genre', 'film_slug', 'genre_id');
     }
+    
+    /**
+     * A film could have many comments.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

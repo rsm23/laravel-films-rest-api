@@ -34,7 +34,7 @@ $factory->define(App\Film::class, function (Faker $faker) {
     return [
             'name' => $title,
             'slug' => str_slug($title),
-            'description' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+            'description' => $faker->paragraph($nbSentences = 10, $variableNbSentences = true),
             'release_date' => $faker->date($format = 'Y-m-d', $max = 'now'),
             'country' => 'USA',
             'price' => 37.45,
@@ -42,10 +42,21 @@ $factory->define(App\Film::class, function (Faker $faker) {
     ];
 });
 $factory->define(App\Rating::class, function (Faker $faker) {
-    $film = Film::where('id',$faker->numberBetween(1,20))->get()[0]->toArray()['slug'];
+    $film = Film::where('id',$faker->numberBetween(1,3))->get()[0]->toArray()['slug'];
     return [
             'user_id' => $faker->numberBetween(1,10),
             'film_slug' => $film,
             'rating' => $faker->numberBetween(1,5)
+    ];
+});
+$factory->define(App\Comment::class, function (Faker $faker) {
+    return [
+            'user_id' => function(){
+                return factory(App\User::class)->create()->id;
+            },
+            'film_slug' => function(){
+                return factory(App\Film::class)->create()->slug;
+            },
+            'body' => $faker->paragraph
     ];
 });

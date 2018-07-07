@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class FilmsTableSeeder extends Seeder
+class CommentTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class FilmsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Film::class, 3)->create();
+        factory(App\Comment::class, 3)->create();
     }
 }
